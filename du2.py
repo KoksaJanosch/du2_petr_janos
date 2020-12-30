@@ -41,3 +41,5 @@ def data_kontejnery(kontejnery):
 
 kontejnery = nahraj_geojson("kontejnery")["features"]
 print(data_kontejnery(kontejnery))
+
+# ! Přidat dokumentaci 
