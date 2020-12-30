@@ -17,4 +17,3 @@ def nahraj_geojson(jmeno_souboru):
         exit()
 
     return data 
-
