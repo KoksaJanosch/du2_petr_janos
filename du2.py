@@ -1,4 +1,5 @@
 import json, os, sys
+from math import sqrt
 from pyproj import CRS, Transformer
 
 def nahraj_geojson(jmeno_souboru):
@@ -59,6 +60,16 @@ def data_adresy(adresy):
 
     return dic_adresy
 
+def vypocet_vzdalenosti(x1, x2, y1,y2):
+    """ Obecná funkce pro výpočet vzdálenosti ze souřadnic dvou bodů pomocí Pythagorovy věty. """
+
+    a = abs(x1 - y1)
+    b = abs(x2 - y2)
+    vzdalenost = sqrt((a*a) + (b*b))
+
+    return vzdalenost
+
+
 # ? načtení vstupních dat 
 kontejnery_json = nahraj_geojson("kontejnery")["features"]
 adresy_json = nahraj_geojson("adresy")["features"]
@@ -66,3 +77,5 @@ adresy_json = nahraj_geojson("adresy")["features"]
 print(data_adresy(adresy_json))
 print("____________ \n ")
 print(data_kontejnery(kontejnery_json))
+
+
