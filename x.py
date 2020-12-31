@@ -1,3 +1,9 @@
-except FileNotFoundError:
-    print(f"Soubor {f_name} neexistuje.")
-    exit()
+
+slovnik = {}
+
+a = 5
+b = "pět"
+
+slovnik[a]=b
+
+print(slovnik)
