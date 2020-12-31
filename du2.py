@@ -37,9 +37,18 @@ def data_kontejnery(kontejnery):
 
     return dic_kontejnery
 
+def data_adresy(adresy):
+    """ pass """
+
+    for a in adresy:
+        a_ulice = a["properties"]["street"]
+        a_cp = a["properties"]["housenumber"]
+        a_geo = a["geometry"]["coordinates"]
+        
 
 
+
+# ? zavedení proměnných
 kontejnery = nahraj_geojson("kontejnery")["features"]
-print(data_kontejnery(kontejnery))
+adresy = nahraj_geojson("adresy")["features"]
 
-# ! Přidat dokumentaci 
