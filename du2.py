@@ -20,7 +20,6 @@ def nahraj_geojson(jmeno_souboru):
 
     return data 
 
-
 def data_kontejnery(kontejnery):
     """ Vytvoří slovník pro volně přístupné kontejnery [adresa:souřadnice]. """
 
@@ -65,10 +64,28 @@ def vypocet_vzdalenosti(x1, x2, y1,y2):
 
     a = abs(x1 - y1)
     b = abs(x2 - y2)
-    vzdalenost = sqrt((a*a) + (b*b))
+    c = sqrt((a*a) + (b*b))
 
-    return vzdalenost
+    return c
 
+def nejblizsi(dic_kontejnery, dic_adresy):
+    """ PASS """
+
+    dic_vzdalenosti = {}
+
+    # adresy
+    for (a_adresa, a_geo) in dic_adresy.items():
+        adresa_x = a_geo[0]
+        adresa_y = a_geo[1]
+
+        # kontejnery
+        for k_geo in dic_kontejnery.values():
+            kontejnery_x = k_geo[0]
+            kontejnery_y = k_geo[1]
+
+            vzdalenost = vypocet_vzdalenosti(adresa_x, kontejnery_x, adresa_y, kontejnery_y)
+
+        dic_vzdalenosti[a_adresa] = vzdalenost
 
 # ? načtení vstupních dat 
 kontejnery_json = nahraj_geojson("kontejnery")["features"]
@@ -77,5 +94,7 @@ adresy_json = nahraj_geojson("adresy")["features"]
 print(data_adresy(adresy_json))
 print("____________ \n ")
 print(data_kontejnery(kontejnery_json))
+print("____________ \n ")
+print(nejblizsi(dic_kontejnery, dic_adresy))
 
 
