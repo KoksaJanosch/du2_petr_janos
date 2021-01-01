@@ -1,6 +1,5 @@
 import json, os, sys
 from math import sqrt, inf
-from statistics import mean 
 from pyproj import CRS, Transformer
 
 def nahraj_geojson(jmeno_souboru):
@@ -34,7 +33,11 @@ def data_kontejnery(kontejnery):
         if k_pristup == "volně":
             dic_kontejnery[k_adresa] = k_geo
 
-    
+        
+    if len(dic_kontejnery) == 0:
+        print("Chyba: do slovníku nebyl přidán žádný záznam. Program končí.")
+        exit()
+
     return dic_kontejnery
 
 def data_adresy(adresy):
@@ -57,6 +60,10 @@ def data_adresy(adresy):
         a_adresa = a_ulice + " " + a_cp
  
         dic_adresy[a_adresa] = a_geo_jtsk
+    
+    if len(dic_adresy) == 0:
+        print("Chyba: do slovníku nebyl přidán žádný záznam. Program končí.")
+        exit()
 
     return dic_adresy
 
@@ -92,9 +99,16 @@ def nejblizsi(dic_kontejnery, dic_adresy):
             if min_vzdalenost > vzdalenost:
                 min_vzdalenost = vzdalenost
 
-        dic_vzdalenosti[a_adresa] = int(min_vzdalenost)
+        dic_vzdalenosti[a_adresa] = min_vzdalenost
     
     return dic_vzdalenosti
+
+def prumerna_vzdalenost(dic_value, dic_len):
+    """ PASS """
+
+    avg = int(sum(dic_value.values()) / len(dic_len))
+
+    return avg
 
 # ? načtení vstupních dat 
 kontejnery_json = nahraj_geojson("kontejnery")["features"]
@@ -110,5 +124,6 @@ nejkratsi_vzdalenosti = nejblizsi(dic_kontejnery, dic_adresy)
 # ! VÝSTUP PROGRAMU
 print("Načteno adresních bodů:", len(dic_adresy))
 print("Načteno kontejnerů na třízený odpad:", len(dic_kontejnery), "\n")
-print("Průměrná vzdálenost ke kontejneru je", mean(nejkratsi_vzdalenosti.values()), "m.")
-print("Nejvyšší vzdálenost ke kontejneru je", max(nejkratsi_vzdalenosti.values()), "m.")
+print("Nejvyšší vzdálenost ke kontejneru je", int(max(nejkratsi_vzdalenosti.values())), "m.")
+print("Průměrná vzdálenost ke kontejneru je", prumerna_vzdalenost(nejkratsi_vzdalenosti, nejkratsi_vzdalenosti), "m.")
+print("Průměrná vzdálenost ke všem kontejnerům je", prumerna_vzdalenost(nejkratsi_vzdalenosti, kontejnery_json), "m.")
