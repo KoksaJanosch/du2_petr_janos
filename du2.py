@@ -14,9 +14,6 @@ def nahraj_geojson(jmeno_souboru):
     except ValueError:
         print(f"Soubor {jmeno_souboru} je chybný.")
         exit()
-    except PermissionError:
-        print(f"Soubor {jmeno_souboru} není přístupný. Povolte přístup.")
-        exit()
 
     return data 
 
@@ -50,13 +47,7 @@ def data_adresy(adresy):
         a_cp = a["properties"]["addr:housenumber"]
         a_geo_wgs = a["geometry"]["coordinates"]
 
-        #? WGS » S-JTSK
-        # nutnost použít crs a transformer z pyproj2 (náhrada pyproj1)
-        wgs = CRS.from_epsg(4326)  # WGS-84
-        jtsk = CRS.from_epsg(5514)  # S-JTSK
-        wgis_jtsk = Transformer.from_crs(wgs, jtsk)
-
-        a_geo_jtsk = wgis_jtsk.transform(a_geo_wgs[1], a_geo_wgs[0])
+        a_geo_jtsk = wgs_jtsk(a_geo_wgs[1], a_geo_wgs[0])
         a_adresa = a_ulice + " " + a_cp
  
         dic_adresy[a_adresa] = a_geo_jtsk
@@ -66,6 +57,18 @@ def data_adresy(adresy):
         exit()
 
     return dic_adresy
+
+def wgs_jtsk(x, y):
+    """ Převod souřadnic z WGS na S-JTSK. """
+
+    # nutnost použít crs a transformer z pyproj2 (náhrada pyproj1)
+    wgs = CRS.from_epsg(4326)  # WGS-84
+    jtsk = CRS.from_epsg(5514)  # S-JTSK
+    wgs_jtsk = Transformer.from_crs(wgs, jtsk)
+
+    now_jtsk = wgs_jtsk.transform(x, y)
+
+    return now_jtsk
 
 def vypocet_vzdalenosti(x1, x2, y1,y2):
     """ Obecná funkce pro výpočet vzdálenosti ze souřadnic dvou bodů pomocí Pythagorovy věty. """
@@ -104,7 +107,7 @@ def nejblizsi(dic_kontejnery, dic_adresy):
     return dic_vzdalenosti
 
 def prumerna_vzdalenost(dic_value, dic_len):
-    """ PASS """
+    """ Vypočte průměrnou vzdálenost bodů v daném slovníku. """
 
     avg = int(sum(dic_value.values()) / len(dic_len))
 
