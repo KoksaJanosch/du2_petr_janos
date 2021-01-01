@@ -72,31 +72,24 @@ def nejblizsi(dic_kontejnery, dic_adresy):
     """ Pro každou adresu hledá nejkratší vzdálenost ke kontejneru. """
 
     dic_vzdalenosti = {}
-
-    # původní minimální vzdálenost je nekonečno (inf)
-    min_vzdalenost = inf
-    print(min_vzdalenost)
+    min_vzdalenost = inf  # původní minimální vzdálenost je nekonečno (inf)
 
     # Projíždí každou adresu ze souboru
     for (a_adresa, a_geo) in dic_adresy.items():
         adresa_x = a_geo[0]
         adresa_y = a_geo[1]
 
-        print("\n adresa X: ", adresa_x, "adresa Y: ", adresa_y)
         # projíždí každý kontejner ze souboru
         for k_geo in dic_kontejnery.values():
             kontejner_x = k_geo[0]
             kontejner_y = k_geo[1]
 
-            print("\n kontejner X: ", kontejner_x, "kontejner Y: ", kontejner_y)
             # vypočte vzdálenost pro každý kontejner od dané adresy
             vzdalenost = vypocet_vzdalenosti(adresa_x, adresa_y, kontejner_x, kontejner_y)
-            print("\n vzdalenost těchto bodů je: ", vzdalenost)
             # pokud je vzdálenost menší než minimální, přepíše se
             if min_vzdalenost > vzdalenost:
                 min_vzdalenost = vzdalenost
-
-        print("\n Pro adresu ", a_adresa, "je kontejner nejblíže ", min_vzdalenost)
+        print("\n adresa: ", a_adresa, "vzdálenost ke kontejneru: ", min_vzdalenost)
         dic_vzdalenosti[a_adresa] = min_vzdalenost
 
 # ? načtení vstupních dat 
