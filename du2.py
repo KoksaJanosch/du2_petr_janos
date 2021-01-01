@@ -72,13 +72,14 @@ def nejblizsi(dic_kontejnery, dic_adresy):
     """ Pro každou adresu hledá nejkratší vzdálenost ke kontejneru. """
 
     dic_vzdalenosti = {}
-    min_vzdalenost = inf  # původní minimální vzdálenost je nekonečno (inf)
 
     # Projíždí každou adresu ze souboru
     for (a_adresa, a_geo) in dic_adresy.items():
         adresa_x = a_geo[0]
         adresa_y = a_geo[1]
 
+        min_vzdalenost = inf  # původní minimální vzdálenost je nekonečno (inf)
+        
         # projíždí každý kontejner ze souboru
         for k_geo in dic_kontejnery.values():
             kontejner_x = k_geo[0]
