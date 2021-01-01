@@ -80,10 +80,10 @@ def nejblizsi(dic_kontejnery, dic_adresy):
 
         # kontejnery
         for k_geo in dic_kontejnery.values():
-            kontejnery_x = k_geo[0]
-            kontejnery_y = k_geo[1]
+            kontejner_x = k_geo[0]
+            kontejner_y = k_geo[1]
 
-            vzdalenost = vypocet_vzdalenosti(adresa_x, kontejnery_x, adresa_y, kontejnery_y)
+            vzdalenost = vypocet_vzdalenosti(adresa_x, kontejner_x, adresa_y, kontejner_y)
 
         dic_vzdalenosti[a_adresa] = vzdalenost
 
@@ -91,10 +91,13 @@ def nejblizsi(dic_kontejnery, dic_adresy):
 kontejnery_json = nahraj_geojson("kontejnery")["features"]
 adresy_json = nahraj_geojson("adresy")["features"]
 
-print(data_adresy(adresy_json))
-print("____________ \n ")
-print(data_kontejnery(kontejnery_json))
-print("____________ \n ")
-print(nejblizsi(dic_kontejnery, dic_adresy))
+# ? vytvoření slovníků s určitými proměnnými ze vstupních geojson souborů
+dic_kontejnery = data_kontejnery(kontejnery_json)
+dic_adresy = data_adresy(adresy_json)
+
+# ? nalezení nejmenších vzáleností
+nejkratsi_vzdalenosti = nejblizsi(dic_kontejnery, dic_adresy)
+
+print(dic_kontejnery)
 
 
