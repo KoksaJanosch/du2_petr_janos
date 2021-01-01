@@ -90,9 +90,11 @@ def nejblizsi(dic_kontejnery, dic_adresy):
             # pokud je vzdálenost menší než minimální, přepíše se
             if min_vzdalenost > vzdalenost:
                 min_vzdalenost = vzdalenost
-        print("\n adresa: ", a_adresa, "vzdálenost ke kontejneru: ", min_vzdalenost)
+                
         dic_vzdalenosti[a_adresa] = min_vzdalenost
-
+    
+    return dic_vzdalenosti
+    
 # ? načtení vstupních dat 
 kontejnery_json = nahraj_geojson("kontejnery")["features"]
 adresy_json = nahraj_geojson("adresy")["features"]
