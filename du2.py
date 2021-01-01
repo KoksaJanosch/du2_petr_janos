@@ -92,24 +92,9 @@ def nejblizsi(dic_kontejnery, dic_adresy):
             if min_vzdalenost > vzdalenost:
                 min_vzdalenost = vzdalenost
 
-        dic_vzdalenosti[a_adresa] = min_vzdalenost
+        dic_vzdalenosti[a_adresa] = int(min_vzdalenost)
     
     return dic_vzdalenosti
-
-
-def prumer_vzdalenosti(dic):
-    """ Výpočet průměrné vzdálenosti ke kontejneru """
-    avg = int(mean(dic.values()))
-
-    return avg
-
-def pocet_bodu(dic):
-    """ PASS """
-    l = len(dic)
-
-    return l
-
-
 
 # ? načtení vstupních dat 
 kontejnery_json = nahraj_geojson("kontejnery")["features"]
@@ -122,9 +107,8 @@ dic_adresy = data_adresy(adresy_json)
 # ? nalezení nejmenších vzáleností
 nejkratsi_vzdalenosti = nejblizsi(dic_kontejnery, dic_adresy)
 
-# ? statistika: počet, průměr, maximum
-prumer = prumer_vzdalenosti(nejkratsi_vzdalenosti)
-pocet_adres = pocet_bodu(dic_kontejnery)
-pocet_kontejneru = pocet_bodu(dic_adresy)
-
-print(prumer, pocet_adres, pocet_kontejneru)
+# ! VÝSTUP PROGRAMU
+print("Načteno adresních bodů:", len(dic_adresy))
+print("Načteno kontejnerů na třízený odpad:", len(dic_kontejnery), "\n")
+print("Průměrná vzdálenost ke kontejneru je", mean(nejkratsi_vzdalenosti.values()), "m.")
+print("Nejvyšší vzdálenost ke kontejneru je", max(nejkratsi_vzdalenosti.values()), "m.")
