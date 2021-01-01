@@ -21,3 +21,7 @@ Průměrná vzdálenost ke kontejneru je 92 m.
 Průměrná vzdálenost ke všem kontejnerům je 33 m.
 ```
 
+**Autor:**
+- Petr Janoš
+- třetí ročník BSGG
+- obor Sociální geografie a geoinformatiky
