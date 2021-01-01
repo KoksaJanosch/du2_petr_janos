@@ -1,5 +1,6 @@
 import json, os, sys
 from math import sqrt, inf
+from statistics import mean 
 from pyproj import CRS, Transformer
 
 def nahraj_geojson(jmeno_souboru):
@@ -90,11 +91,26 @@ def nejblizsi(dic_kontejnery, dic_adresy):
             # pokud je vzdálenost menší než minimální, přepíše se
             if min_vzdalenost > vzdalenost:
                 min_vzdalenost = vzdalenost
-                
+
         dic_vzdalenosti[a_adresa] = min_vzdalenost
     
     return dic_vzdalenosti
-    
+
+
+def prumer_vzdalenosti(dic):
+    """ Výpočet průměrné vzdálenosti ke kontejneru """
+    avg = int(mean(dic.values()))
+
+    return avg
+
+def pocet_bodu(dic):
+    """ PASS """
+    l = len(dic)
+
+    return l
+
+
+
 # ? načtení vstupních dat 
 kontejnery_json = nahraj_geojson("kontejnery")["features"]
 adresy_json = nahraj_geojson("adresy")["features"]
@@ -106,6 +122,9 @@ dic_adresy = data_adresy(adresy_json)
 # ? nalezení nejmenších vzáleností
 nejkratsi_vzdalenosti = nejblizsi(dic_kontejnery, dic_adresy)
 
-print(nejkratsi_vzdalenosti)
+# ? statistika: počet, průměr, maximum
+prumer = prumer_vzdalenosti(nejkratsi_vzdalenosti)
+pocet_adres = pocet_bodu(dic_kontejnery)
+pocet_kontejneru = pocet_bodu(dic_adresy)
 
-
+print(prumer, pocet_adres, pocet_kontejneru)

@@ -1,9 +1,6 @@
-import math
 
-min_vzdalenost = math.inf
-vzdalenost = 10
+a = 2.4
+b = 3.5
 
-if min_vzdalenost > vzdalenost:
-    min_vzdalenost = vzdalenost
-    
-    print(min_vzdalenost)
+print(int(a))
+print(float(b))
