@@ -1,5 +1,5 @@
 import json, os, sys
-from math import sqrt
+from math import sqrt, inf
 from pyproj import CRS, Transformer
 
 def nahraj_geojson(jmeno_souboru):
@@ -69,23 +69,32 @@ def vypocet_vzdalenosti(x1, x2, y1,y2):
     return c
 
 def nejblizsi(dic_kontejnery, dic_adresy):
-    """ PASS """
+    """ Pro každou adresu hledá nejkratší vzdálenost ke kontejneru. """
 
     dic_vzdalenosti = {}
 
-    # adresy
+    # Projíždí každou adresu ze souboru
     for (a_adresa, a_geo) in dic_adresy.items():
         adresa_x = a_geo[0]
         adresa_y = a_geo[1]
 
-        # kontejnery
+        # projíždí každý kontejner ze souboru
         for k_geo in dic_kontejnery.values():
             kontejner_x = k_geo[0]
             kontejner_y = k_geo[1]
 
+            # vypočte vzdálenost pro každý kontejner od dané adresy
             vzdalenost = vypocet_vzdalenosti(adresa_x, kontejner_x, adresa_y, kontejner_y)
+            print(vzdalenost)
+            # původní minimální vzdálenost je nekonečno (inf)
+            min_vzdalenost = inf
+            print(min_vzdalenost)
+            # pokud je vzdálenost menší než minimální, přepíše se
+            if min_vzdalenost > vzdalenost:
+                min_vzdalenost = vzdalenost
+                print(min_vzdalenost)
 
-        dic_vzdalenosti[a_adresa] = vzdalenost
+        dic_vzdalenosti[a_adresa] = min_vzdalenost
 
 # ? načtení vstupních dat 
 kontejnery_json = nahraj_geojson("kontejnery")["features"]
@@ -98,6 +107,6 @@ dic_adresy = data_adresy(adresy_json)
 # ? nalezení nejmenších vzáleností
 nejkratsi_vzdalenosti = nejblizsi(dic_kontejnery, dic_adresy)
 
-print(dic_kontejnery)
+print(nejkratsi_vzdalenosti)
 
 
