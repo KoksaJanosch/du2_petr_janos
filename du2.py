@@ -7,6 +7,10 @@ def nahraj_geojson(jmeno_souboru):
     try:
         with open(os.path.join(sys.path[0], jmeno_souboru+".geojson"), "r", encoding="UTF-8") as file:
                 data = json.load(file)
+        
+    except PermissionError:
+        print(f"K souboru {jmeno_souboru} nemá program přístup.")
+        exit()
 
     except FileNotFoundError:
         print(f"Soubor {jmeno_souboru} nebyl nenalezen.")
@@ -14,6 +18,7 @@ def nahraj_geojson(jmeno_souboru):
     except ValueError:
         print(f"Soubor {jmeno_souboru} je chybný.")
         exit()
+    
 
     return data 
 
