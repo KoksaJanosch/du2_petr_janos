@@ -77,8 +77,8 @@ def wgs_jtsk(x, y):
 def vypocet_vzdalenosti(x1, x2, y1,y2):
     """ Obecná funkce pro výpočet vzdálenosti ze souřadnic dvou bodů pomocí Pythagorovy věty. """
 
-    a = (x1 - y1)
-    b = (x2 - y2)
+    a = x1 - y1
+    b = x2 - y2
     c = sqrt((a*a) + (b*b))
 
     return c
@@ -118,9 +118,19 @@ def nejblizsi(dic_kontejnery, dic_adresy):
 def prumerna_vzdalenost(dic_value, dic_len):
     """ Vypočte průměrnou vzdálenost bodů v daném slovníku. """
 
-    avg = int(sum(dic_value.values()) / len(dic_len))
+    avg = sum(dic_value.values()) / len(dic_len)
 
     return avg
+
+def maximalni(dic):
+    """ Vypíše maximální vzálenost ke kontejneru s příslušnou adresou. """
+
+    max_v = max(nejkratsi_vzdalenosti.values())
+
+    for (adresa, vzdalenost) in dic.items():
+        if vzdalenost == max_v:
+            max_a = adresa
+    return max_v, max_a
 
 # ? načtení vstupních dat 
 kontejnery_json = nahraj_geojson("kontejnery")["features"]
@@ -133,9 +143,14 @@ dic_adresy = data_adresy(adresy_json)
 # ? nalezení nejmenších vzáleností
 nejkratsi_vzdalenosti = nejblizsi(dic_kontejnery, dic_adresy)
 
+# ? PROMĚNNÉ K VÝSTUPŮM
+prumer_volne = prumerna_vzdalenost(nejkratsi_vzdalenosti, nejkratsi_vzdalenosti)
+prumer_vsechny = prumerna_vzdalenost(nejkratsi_vzdalenosti, kontejnery_json)
+nejdelsi_vzdalenost = maximalni(nejkratsi_vzdalenosti)
+
 # ! VÝSTUP PROGRAMU
 print("Načteno adresních bodů:", len(dic_adresy))
 print("Načteno kontejnerů na třízený odpad:", len(dic_kontejnery), "\n")
-print("Nejvyšší vzdálenost ke kontejneru je", int(max(nejkratsi_vzdalenosti.values())), "m.")
-print("Průměrná vzdálenost ke kontejneru je", prumerna_vzdalenost(nejkratsi_vzdalenosti, nejkratsi_vzdalenosti), "m.")
-print("Průměrná vzdálenost ke všem kontejnerům je", prumerna_vzdalenost(nejkratsi_vzdalenosti, kontejnery_json), "m.")
+print("Průměrná vzdálenost ke kontejneru je " f"{prumer_volne:.0f} metrů.")
+print("Průměrná vzdálenost ke všem kontejnerům je " f"{prumer_vsechny:.0f} metrů.")
+print("Maximální vzálenost ke kontejneru je " f"{nejdelsi_vzdalenost[0]:.0f} metrů " "a to z adresy", nejdelsi_vzdalenost[1])
