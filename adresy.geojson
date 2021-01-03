@@ -133,6 +133,27 @@
     {
       "type": "Feature",
       "properties": {
+        "@id": "node/8175554382",
+        "addr:conscriptionnumber": "1754",
+        "addr:housenumber": "1",
+        "addr:place": "Nusle",
+        "addr:postcode": "14000",
+        "addr:street": "adresa",
+        "addr:streetnumber": "1",
+        "ref:ruian:addr": "81316348"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          14.448102,
+          50.0609945
+        ]
+      },
+      "id": "node/8175554382"
+    },
+    {
+      "type": "Feature",
+      "properties": {
         "@id": "node/8175554383",
         "addr:conscriptionnumber": "1754",
         "addr:housenumber": "1754/53",

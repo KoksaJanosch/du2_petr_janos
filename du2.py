@@ -31,8 +31,7 @@ def data_kontejnery(kontejnery):
         k_geo = k["geometry"]["coordinates"]
         k_pristup = k["properties"]["PRISTUP"]
 
-        if k_pristup == "volně":
-            dic_kontejnery[k_adresa] = k_geo
+        dic_kontejnery[k_adresa] = k_geo, k_pristup
 
         
     if len(dic_kontejnery) == 0:
@@ -74,11 +73,11 @@ def wgs_jtsk(x, y):
 
     return now_jtsk
 
-def vypocet_vzdalenosti(x1, x2, y1,y2):
+def vypocet_vzdalenosti(geo_a, geo_k):
     """ Obecná funkce pro výpočet vzdálenosti ze souřadnic dvou bodů pomocí Pythagorovy věty. """
 
-    a = x1 - y1
-    b = x2 - y2
+    a = geo_a[0] - geo_k[0]
+    b = geo_a[1] - geo_k[1]
     c = sqrt((a*a) + (b*b))
 
     return c
@@ -90,21 +89,23 @@ def nejblizsi(dic_kontejnery, dic_adresy):
 
     # Projíždí každou adresu ze souboru
     for (a_adresa, a_geo) in dic_adresy.items():
-        adresa_x = a_geo[0]
-        adresa_y = a_geo[1]
+        min_vzdalenost = inf  # původní minimální vzdálenost je nekonečno (inf)        
 
-        min_vzdalenost = inf  # původní minimální vzdálenost je nekonečno (inf)
-        
         # projíždí každý kontejner ze souboru
-        for k_geo in dic_kontejnery.values():
-            kontejner_x = k_geo[0]
-            kontejner_y = k_geo[1]
+        for (k_geo, k_pristup) in dic_kontejnery.values():
+            # pokud je přístup pouze pro obyvatele domu
+            if k_pristup == "obyvatelům domu":
+                for k_adresa in dic_kontejnery.keys():
+                    # zkontroluje, zda je adresa domu stejná jako adresa kontejneru
+                    if k_adresa == a_adresa:
+                        min_vzdalenost = 0
+            # pokud je přístup volný, vypočte k němu vzdálebost
+            elif k_pristup == "volně":
+                vzdalenost = vypocet_vzdalenosti(a_geo, k_geo)
+                # pokud je vzdálenost menší než minimální, přepíše se
+                if min_vzdalenost > vzdalenost:
+                    min_vzdalenost = vzdalenost
 
-            # vypočte vzdálenost pro každý kontejner od dané adresy
-            vzdalenost = vypocet_vzdalenosti(adresa_x, adresa_y, kontejner_x, kontejner_y)
-            # pokud je vzdálenost menší než minimální, přepíše se
-            if min_vzdalenost > vzdalenost:
-                min_vzdalenost = vzdalenost
 
         # ošetření nejbližšího kontejneru vzdálenho +10 km 
         if min_vzdalenost > 10000:
@@ -149,3 +150,4 @@ print("Načteno kontejnerů na třízený odpad:", len(dic_kontejnery), "\n")
 print("Medián vzdáleností ke kontejneru je " f"{median_vzdalenosti:.0f} metrů" )
 print("Průměrná vzdálenost ke kontejneru je " f"{prumer_vzdalenosti:.0f} metrů")
 print("Maximální vzálenost ke kontejneru je " f"{nejdelsi_vzdalenost[0]:.0f} metrů a to z adresy", nejdelsi_vzdalenost[1])
+

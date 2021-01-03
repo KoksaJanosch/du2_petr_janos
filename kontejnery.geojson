@@ -28,6 +28,22 @@
 			"type" : "Feature",
 			"geometry" : {
 				"type" : "Point",
+				"coordinates" : [ -742784.9999562949, -1043789.0000025257 ]
+			},
+			"properties" : {
+				"OBJECTID" : 1,
+				"ID" : 3620,
+				"STATIONNUMBER" : "0001/-095",
+				"STATIONNAME" : "adresa 1",
+				"CITYDISTRICTRUIANCODE" : 500054,
+				"CITYDISTRICT" : "Praha 1",
+				"PRISTUP" : "obyvatelům domu"
+			}
+		},
+		{
+			"type" : "Feature",
+			"geometry" : {
+				"type" : "Point",
 				"coordinates" : [ -743073.7406087592, -1047385.2977104746 ]
 			},
 			"properties" : {
