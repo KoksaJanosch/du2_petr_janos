@@ -115,13 +115,6 @@ def nejblizsi(dic_kontejnery, dic_adresy):
     
     return dic_vzdalenosti
 
-def prumerna_vzdalenost(dic_value, dic_len):
-    """ Vypočte průměrnou vzdálenost bodů v daném slovníku. """
-
-    avg = sum(dic_value.values()) / len(dic_len)
-
-    return avg
-
 def maximalni(dic):
     """ Vypíše maximální vzálenost ke kontejneru s příslušnou adresou. """
 
@@ -145,16 +138,14 @@ dic_adresy = data_adresy(adresy_json)
 nejkratsi_vzdalenosti = nejblizsi(dic_kontejnery, dic_adresy)
 
 # ? PROMĚNNÉ K VÝSTUPŮM
-prumer_volne = prumerna_vzdalenost(nejkratsi_vzdalenosti, nejkratsi_vzdalenosti)
-prumer_vsechny = prumerna_vzdalenost(nejkratsi_vzdalenosti, kontejnery_json)
 nejdelsi_vzdalenost = maximalni(nejkratsi_vzdalenosti)
 median_vzdalenosti = statistics.median(nejkratsi_vzdalenosti.values())
+prumer_vzdalenosti = statistics.mean(nejkratsi_vzdalenosti.values())
 
 # ! VÝSTUP PROGRAMU
 print("Načteno adresních bodů:", len(dic_adresy))
 print("Načteno kontejnerů na třízený odpad:", len(dic_kontejnery), "\n")
-print("Medián vzdáleností ke kontejneru je " f"{median_vzdalenosti:.0f} metrů" )
-print("Průměrná vzdálenost ke kontejneru je " f"{prumer_volne:.0f} metrů")
-print("Maximální vzálenost ke kontejneru je " f"{nejdelsi_vzdalenost[0]:.0f} metrů a to z adresy", nejdelsi_vzdalenost[1])
 
-# print("Průměrná vzdálenost ke všem kontejnerům je " f"{prumer_vsechny:.0f} metrů.")
+print("Medián vzdáleností ke kontejneru je " f"{median_vzdalenosti:.0f} metrů" )
+print("Průměrná vzdálenost ke kontejneru je " f"{prumer_vzdalenosti:.0f} metrů")
+print("Maximální vzálenost ke kontejneru je " f"{nejdelsi_vzdalenost[0]:.0f} metrů a to z adresy", nejdelsi_vzdalenost[1])
