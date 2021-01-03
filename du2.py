@@ -106,6 +106,11 @@ def nejblizsi(dic_kontejnery, dic_adresy):
             if min_vzdalenost > vzdalenost:
                 min_vzdalenost = vzdalenost
 
+        # ošetření nejbližšího kontejneru vzdálenho +10 km 
+        if min_vzdalenost > 10000:
+            print("Nejbližší kontejner je vzdálený více jak 10 km od adresního bodu.\n Program bude ukončen.")
+            exit()
+
         dic_vzdalenosti[a_adresa] = min_vzdalenost
     
     return dic_vzdalenosti
