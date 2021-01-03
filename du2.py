@@ -11,7 +11,6 @@ def nahraj_geojson(jmeno_souboru):
     except PermissionError:
         print(f"K souboru {jmeno_souboru} nemá program přístup.")
         exit()
-
     except FileNotFoundError:
         print(f"Soubor {jmeno_souboru} nebyl nenalezen.")
         exit()
@@ -78,8 +77,8 @@ def wgs_jtsk(x, y):
 def vypocet_vzdalenosti(x1, x2, y1,y2):
     """ Obecná funkce pro výpočet vzdálenosti ze souřadnic dvou bodů pomocí Pythagorovy věty. """
 
-    a = abs(x1 - y1)
-    b = abs(x2 - y2)
+    a = (x1 - y1)
+    b = (x2 - y2)
     c = sqrt((a*a) + (b*b))
 
     return c
