@@ -6,6 +6,10 @@ Program zjistí ze vstupních souborů typu `geojson` průměrnou a maximální 
 
 Vstupem jsou dva soubory typu `geojson`. První soubor s názvem `adresy.geojson` obsahuje adresní body (pracuje se s klíči `addr:street` a `addr:housenumber`) byl stáhnut z webu [Overpass Turbo](http://overpass-turbo.eu/s/119J). Druhý soubor s názvem `kontejnery.geojson` obsahuje kontejnery na třízený odpad (pracuje se s atributy `STATIONNAME` a `PRISTUP`) byl získán z [pražského Geoportálu](https://www.geoportalpraha.cz/cs/data/otevrena-data/8726EF0E-0834-463B-9E5F-FE09E62D73FB). Program ze souboru s adresama vyselektuje jejich adresy (ulice a čp) a dané souřadnice, z druhého souboru vybere kontejnery, které jsou jen volně přístupné a taktéž souřadnice. 
 
+Souřadnicové systémy vstupních souborů:
+- adresy.geojson : `WGS-84 (4326)`
+- kontejnery.geojson: `S-JTSK (5514)`
+
 
 **Výstupy**
 
@@ -21,7 +25,10 @@ Průměrná vzdálenost ke kontejneru je 92 m.
 Průměrná vzdálenost ke všem kontejnerům je 33 m.
 ```
 
+Poznámka:
+*Pro sestavení kódu bylo využito rozšíření pro Visual Studio Code [`Better Comments`](https://marketplace.visualstudio.com/items?itemName=aaron-bond.better-comments), které zvýrazňuje komentáře dle příšlušného znaku za `křížkem: #`. Tyto znaky však neplní žádnou jinou funkci, než větší přehlednost kódu při používání tohoto rozšíření.*
+
 **Autor:**
 - Petr Janoš
-- třetí ročník BSGG
+- čtvrtý ročník BSGG
 - obor Sociální geografie a geoinformatiky
