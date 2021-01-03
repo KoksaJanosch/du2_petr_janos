@@ -22,7 +22,7 @@ def nahraj_geojson(jmeno_souboru):
     return data 
 
 def data_kontejnery(kontejnery):
-    """ Vytvoří slovník pro volně přístupné kontejnery [adresa:souřadnice]. """
+    """ Vytvoří slovník z kontejnerů [adresa:souřadnice, přístup]. """
 
     dic_kontejnery = {} 
 
