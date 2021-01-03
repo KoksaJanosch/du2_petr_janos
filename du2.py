@@ -1,4 +1,4 @@
-import json, os, sys
+import json, os, sys, statistics
 from math import sqrt, inf
 from pyproj import CRS, Transformer
 
@@ -130,6 +130,7 @@ def maximalni(dic):
     for (adresa, vzdalenost) in dic.items():
         if vzdalenost == max_v:
             max_a = adresa
+
     return max_v, max_a
 
 # ? načtení vstupních dat 
@@ -147,10 +148,13 @@ nejkratsi_vzdalenosti = nejblizsi(dic_kontejnery, dic_adresy)
 prumer_volne = prumerna_vzdalenost(nejkratsi_vzdalenosti, nejkratsi_vzdalenosti)
 prumer_vsechny = prumerna_vzdalenost(nejkratsi_vzdalenosti, kontejnery_json)
 nejdelsi_vzdalenost = maximalni(nejkratsi_vzdalenosti)
+median_vzdalenosti = statistics.median(nejkratsi_vzdalenosti.values())
 
 # ! VÝSTUP PROGRAMU
 print("Načteno adresních bodů:", len(dic_adresy))
 print("Načteno kontejnerů na třízený odpad:", len(dic_kontejnery), "\n")
-print("Průměrná vzdálenost ke kontejneru je " f"{prumer_volne:.0f} metrů.")
-print("Průměrná vzdálenost ke všem kontejnerům je " f"{prumer_vsechny:.0f} metrů.")
-print("Maximální vzálenost ke kontejneru je " f"{nejdelsi_vzdalenost[0]:.0f} metrů " "a to z adresy", nejdelsi_vzdalenost[1])
+print("Medián vzdáleností ke kontejneru je " f"{median_vzdalenosti:.0f} metrů" )
+print("Průměrná vzdálenost ke kontejneru je " f"{prumer_volne:.0f} metrů")
+print("Maximální vzálenost ke kontejneru je " f"{nejdelsi_vzdalenost[0]:.0f} metrů a to z adresy", nejdelsi_vzdalenost[1])
+
+# print("Průměrná vzdálenost ke všem kontejnerům je " f"{prumer_vsechny:.0f} metrů.")

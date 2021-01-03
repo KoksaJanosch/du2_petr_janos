@@ -13,7 +13,7 @@ Souřadnicové systémy vstupních souborů:
 
 **Výstupy**
 
-Program vypíše počet adresních bodů a kontejnerů, které zařadil do analýzy. Dále vypíše maximální a průměrnou vzdálenost ke kontejnerům, navíc udává i informaci, jaká je průměrná vzdálenost ke kontejnerům v případě, že do analýzy zahrne všechny kontejnery (tedy nejen ty volně přístupné, ale i kontejnery, které jsou určené jen pro obyvatele domu). 
+Program vypíše počet adresních bodů a kontejnerů, které zařadil do analýzy. Dále vypíše maximální a průměrnou vzdálenost ke kontejnerům, navíc udává i informaci, jaká je průměrná vzdálenost ke kontejnerům v případě, že do analýzy zahrne všechny kontejnery (tedy nejen ty volně přístupné, ale i kontejnery, které jsou určené jen pro obyvatele domu). Pokud minimální vzálenost přesáhne 10 km, dostanete upozornění a program se ukončí. 
 
 Příklad výstupu pro městskou část Praha - Nusle:
 ```
