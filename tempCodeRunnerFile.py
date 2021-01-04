@@ -1,4 +1,4 @@
-import json, os, sys, statistics, argparse
+import json, os, sys, statistics
 from math import sqrt, inf
 from pyproj import CRS, Transformer
 
@@ -18,10 +18,11 @@ def nahraj_geojson(jmeno_souboru):
         print(f"Soubor {jmeno_souboru} je chybný.")
         exit()
     
+
     return data 
 
 def data_kontejnery(kontejnery):
-    """ Vytvoří slovník z kontejnerů [adresa:souřadnice, přístup]. """
+    """ Vytvoří slovník pro volně přístupné kontejnery [adresa:souřadnice]. """
 
     dic_kontejnery = {} 
 
@@ -91,20 +92,12 @@ def nejblizsi(dic_kontejnery, dic_adresy):
         min_vzdalenost = inf  # původní minimální vzdálenost je nekonečno (inf)        
 
         # projíždí každý kontejner ze souboru
-        for (k_geo, k_pristup) in dic_kontejnery.values():
-            # pokud je přístup pouze pro obyvatele domu
-            if k_pristup == "obyvatelům domu":
-                for k_adresa in dic_kontejnery.keys():
-                    # zkontroluje, zda je adresa domu stejná jako adresa kontejneru
-                    if k_adresa == a_adresa:
-                        min_vzdalenost = 0
-            # pokud je přístup volný, vypočte k němu vzdálebost
-            elif k_pristup == "volně":
-                vzdalenost = vypocet_vzdalenosti(a_geo, k_geo)
-                # pokud je vzdálenost menší než minimální, přepíše se
-                if min_vzdalenost > vzdalenost:
-                    min_vzdalenost = vzdalenost
-
+        for k_geo in dic_kontejnery.values():
+            # vypočte vzdálenost pro každý kontejner od dané adresy
+            vzdalenost = vypocet_vzdalenosti(a_geo, k_geo)
+            # pokud je vzdálenost menší než minimální, přepíše se
+            if min_vzdalenost > vzdalenost:
+                min_vzdalenost = vzdalenost
 
         # ošetření nejbližšího kontejneru vzdálenho +10 km 
         if min_vzdalenost > 10000:
@@ -135,10 +128,10 @@ dic_kontejnery = data_kontejnery(kontejnery_json)
 dic_adresy = data_adresy(adresy_json)
 
 # ? nalezení nejmenších vzáleností
-nejkratsi_vzdalenosti = nejblizsi(dic_kontejnery, dic_adresy)
+# nejkratsi_vzdalenosti = nejblizsi(dic_kontejnery, dic_adresy)
 
 # ? PROMĚNNÉ K VÝSTUPŮM
-nejdelsi_vzdalenost = maximalni(nejkratsi_vzdalenosti)
+# nejdelsi_vzdalenost = maximalni(nejkratsi_vzdalenosti)
 median_vzdalenosti = statistics.median(nejkratsi_vzdalenosti.values())
 prumer_vzdalenosti = statistics.mean(nejkratsi_vzdalenosti.values())
 
@@ -149,3 +142,6 @@ print("Načteno kontejnerů na třízený odpad:", len(dic_kontejnery), "\n")
 print("Medián vzdáleností ke kontejneru je " f"{median_vzdalenosti:.0f} metrů" )
 print("Průměrná vzdálenost ke kontejneru je " f"{prumer_vzdalenosti:.0f} metrů")
 print("Maximální vzálenost ke kontejneru je " f"{nejdelsi_vzdalenost[0]:.0f} metrů a to z adresy", nejdelsi_vzdalenost[1])
+
+print(data_kontejnery(kontejnery_json))
+print(kontejnery_json)
